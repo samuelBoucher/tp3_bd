@@ -7,7 +7,7 @@ using TP3.Entities;
 
 namespace TP3.DataAccessLayer
 {
-    public class TodoContext : DbContext
+    public class HedgesProductionsContext : DbContext
     {
         public DbSet<Artiste> Artistes { get; set; }
         public DbSet<Client> Clients { get; set; }
@@ -15,7 +15,7 @@ namespace TP3.DataAccessLayer
         public DbSet<Facture> Factures { get; set; }
         public DbSet<Groupe> Groupes { get; set; }
 
-        public TodoContext(DbContextOptions<TodoContext> options)
+        public HedgesProductionsContext(DbContextOptions<HedgesProductionsContext> options)
             : base(options)
         {
         }
