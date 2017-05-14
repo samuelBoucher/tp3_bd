@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD53BCD7-ECB
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TP3", "src\TP3\TP3.xproj", "{4635E35B-55EB-4E13-95CD-498F51E9DD61}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{1E5E0797-5254-4E02-ACCC-835B39BB30B5}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TP3.Tests", "TP3.Tests\TP3.Tests.xproj", "{5C97F35F-35E4-4E2A-83E6-4471FD161285}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +21,16 @@ Global
 		{4635E35B-55EB-4E13-95CD-498F51E9DD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4635E35B-55EB-4E13-95CD-498F51E9DD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4635E35B-55EB-4E13-95CD-498F51E9DD61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C97F35F-35E4-4E2A-83E6-4471FD161285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C97F35F-35E4-4E2A-83E6-4471FD161285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C97F35F-35E4-4E2A-83E6-4471FD161285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C97F35F-35E4-4E2A-83E6-4471FD161285}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4635E35B-55EB-4E13-95CD-498F51E9DD61} = {AD53BCD7-ECBD-4DD7-830E-D90FB2F3708E}
+		{5C97F35F-35E4-4E2A-83E6-4471FD161285} = {1E5E0797-5254-4E02-ACCC-835B39BB30B5}
 	EndGlobalSection
 EndGlobal
