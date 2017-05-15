@@ -1,4 +1,5 @@
-﻿using TP3.Entities;
+﻿using System;
+using TP3.Entities;
 
 namespace TP3.DataAccessLayer
 {
@@ -17,6 +18,11 @@ namespace TP3.DataAccessLayer
             _context.SaveChanges();
         }
 
-
+        public void UpdateClient(Client updatedClient)
+        {
+            _context.Clients.Attach(updatedClient);
+            //_context.Entry(updatedClient).State = System.Data.EntityState.Modified;
+            _context.SaveChanges();
+        }
     }
 }

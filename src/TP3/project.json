@@ -29,7 +29,8 @@
       "type": "platform"
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
-    "NSubstitute": "2.0.3"
+    "NSubstitute": "2.0.3",
+    "System.Data.SqlClient": "4.1.0"
   },
   "frameworks": {
     "netcoreapp1.0": {
