@@ -10,10 +10,19 @@ namespace TP3.DataAccessLayer
         public DbSet<Contrat> Contrats { get; set; }
         public DbSet<Facture> Factures { get; set; }
         public DbSet<Groupe> Groupes { get; set; }
+        public DbSet<LienArtisteGroupe> LienArtisteGroupe { get; set; }
+
 
         public HedgesProductionsContext(DbContextOptions<HedgesProductionsContext> options)
-            : base(options)
+             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<LienArtisteGroupe>()
+                .HasKey(lien => new { lien.IdArtiste, lien.NomGroupe });
+        }
+
     }
 }

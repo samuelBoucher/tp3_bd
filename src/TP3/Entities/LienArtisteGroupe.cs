@@ -9,14 +9,9 @@ namespace TP3.Entities
 {
     public class LienArtisteGroupe
     {
-        [Key]
-        [ForeignKey("IdArtiste")]
-        [Required]
+        [Key, ForeignKey("Artiste"), Column(Order = 0)]
         public int IdArtiste { get; set; }
-
-        [Key]
-        [ForeignKey("NomGroupe")]
-        [Required]
+        [Key, ForeignKey("Groupe"), Column(Order = 1)]
         public string NomGroupe { get; set; }
 
         public string RoleArtiste { get; set; }

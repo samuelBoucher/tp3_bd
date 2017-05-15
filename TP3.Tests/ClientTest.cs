@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using TP3.DataAccessLayer;
 using TP3.Entities;
 using Xunit;
