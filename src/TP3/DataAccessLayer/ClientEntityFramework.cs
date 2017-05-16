@@ -21,7 +21,12 @@ namespace TP3.DataAccessLayer
         public void UpdateClient(Client updatedClient)
         {
             _context.Clients.Attach(updatedClient);
-            //_context.Entry(updatedClient).State = System.Data.EntityState.Modified;
+            _context.SaveChanges();
+        }
+
+        public void DeleteClient(Client client)
+        {
+            _context.Clients.Remove(client);
             _context.SaveChanges();
         }
     }

@@ -75,5 +75,35 @@ namespace TP3.Tests
                 apiDbContext.Clients.FirstOrDefault().ShouldBeEquivalentTo(client);
             }
         }
+
+        [Fact]
+        public void Delete_ShouldDeleteClient()
+        {
+            var client = new Client()
+            {
+                CodeClient = "Code",
+                Prenom = "Prenom",
+                Nom = "Nom",
+                NoTelephone = 123456789,
+                DepotNecessaire = false
+            };
+            var client2 = new Client()
+            {
+                CodeClient = "Code1",
+                Prenom = "Prenom1",
+                Nom = "Nom1",
+                NoTelephone = 123456789,
+                DepotNecessaire = false
+            };
+            _repository.AddClient(client);
+            _repository.AddClient(client2);
+
+            _repository.DeleteClient(client2);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Clients.Should().NotContain(client2);
+            }
+        }
     }
 }
