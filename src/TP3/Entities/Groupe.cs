@@ -13,9 +13,6 @@ namespace TP3.Entities
         [Key, Column(Order = 1)]
         public string Nom { get; set; }
 
-        [Required]
-        public ICollection<LienArtisteGroupe> Artistes { get; set; }
-
         public string CachetVoulu { get; set; }
     }
 }
