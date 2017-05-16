@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using TP3.DataAccessLayer;
 using TP3.Entities;
@@ -28,7 +29,7 @@ namespace TP3.Tests
 
 
         [Fact]
-        public void Add_ShouldAddClientToDatabase()
+        public void AddClient_ShouldAddClientToDatabase()
         {
             var client = new Client()
             {
@@ -43,12 +44,12 @@ namespace TP3.Tests
 
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.Clients.ToList().Count.Should().Be(1);
+                apiDbContext.Clients.FirstOrDefault().ShouldBeEquivalentTo(client);
             }
         }
 
         [Fact]
-        public void Update_ShouldUpdateClient()
+        public void UpdateClient_ShouldUpdateClient()
         {
             var client = new Client()
             {
@@ -60,24 +61,24 @@ namespace TP3.Tests
             };
             var updatedClient = new Client()
             {
-                CodeClient = "Code1",
+                CodeClient = "Code",
                 Prenom = "Prenom1",
                 Nom = "Nom1",
                 NoTelephone = 123456789,
                 DepotNecessaire = false
             };
-            _repository.AddClient(client);
 
+            _repository.AddClient(client);
             _repository.UpdateClient(updatedClient);
 
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.Clients.FirstOrDefault().ShouldBeEquivalentTo(client);
+                apiDbContext.Clients.FirstOrDefault().ShouldBeEquivalentTo(updatedClient);
             }
         }
 
         [Fact]
-        public void Delete_ShouldDeleteClient()
+        public void DeleteClient_ShouldDeleteClient()
         {
             var client = new Client()
             {
@@ -103,6 +104,27 @@ namespace TP3.Tests
             using (var apiDbContext = _contextFactory.Create())
             {
                 apiDbContext.Clients.Should().NotContain(client2);
+            }
+        }
+
+        [Fact]
+        public void AddContrat_ShouldAddContratToDatabase()
+        {
+            var contrat = new Contrat()
+            {
+                NomGroupe = "groupe",
+                CodeClient = "code",
+                DatePresentation = new DateTime(2017, 06, 01),
+                HeureDebut = new DateTime(2017, 06, 01, 21, 00, 00),
+                HeureFin = new DateTime(2017, 06, 01, 23, 00, 00),
+                Prix = 199.99
+            };
+
+            _repository.AddContrat(contrat);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Contrats.FirstOrDefault().ShouldBeEquivalentTo(contrat);
             }
         }
     }
