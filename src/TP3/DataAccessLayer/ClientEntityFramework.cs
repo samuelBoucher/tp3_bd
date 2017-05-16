@@ -42,8 +42,13 @@ namespace TP3.DataAccessLayer
 
         public void UpdateContrat(Contrat updatedContrat)
         {
-            _context.Contrats.Update(updatedContrat);
-            _context.SaveChanges();
+            var originalContrat = _context.Contrats.Find(updatedContrat.NoContrat);
+
+            if (originalContrat != null)
+            {
+                _context.Entry(originalContrat).CurrentValues.SetValues(updatedContrat);
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteContrat(Contrat contrat)
@@ -60,8 +65,13 @@ namespace TP3.DataAccessLayer
 
         public void UpdateFacture(Facture updatedFacture)
         {
-            _context.Factures.Update(updatedFacture);
-            _context.SaveChanges();
+            //var originalClient = _context.Clients.Find(updatedClient.CodeClient);
+
+            //if (originalClient != null)
+            //{
+            //    _context.Entry(originalClient).CurrentValues.SetValues(updatedClient);
+            //    _context.SaveChanges();
+            //}
         }
 
         public void DeleteFacture(Facture facture)

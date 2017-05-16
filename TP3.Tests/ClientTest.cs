@@ -24,9 +24,10 @@ namespace TP3.Tests
         private static void ClearAllTables(HedgesProductionsContext dbContext)
         {
             dbContext.Clients.RemoveRange(dbContext.Clients);
+            dbContext.Contrats.RemoveRange(dbContext.Contrats);
+            dbContext.Factures.RemoveRange(dbContext.Factures);
             dbContext.SaveChanges();
         }
-
 
         [Fact]
         public void AddClient_ShouldAddClientToDatabase()
@@ -112,6 +113,7 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
+                NoContrat = 1,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -125,6 +127,40 @@ namespace TP3.Tests
             using (var apiDbContext = _contextFactory.Create())
             {
                 apiDbContext.Contrats.FirstOrDefault().ShouldBeEquivalentTo(contrat);
+            }
+        }
+
+        [Fact]
+        public void UpdateContrat_ShouldUpdateContratToDatabase()
+        {
+            var contrat = new Contrat()
+            {
+                NoContrat = 2,
+                NomGroupe = "groupe",
+                CodeClient = "code",
+                DatePresentation = new DateTime(2017, 06, 01),
+                HeureDebut = new DateTime(2017, 06, 01, 21, 00, 00),
+                HeureFin = new DateTime(2017, 06, 01, 23, 00, 00),
+                Prix = 199.99
+            };
+
+            var updatedContrat = new Contrat()
+            {
+                NoContrat = contrat.NoContrat,
+                NomGroupe = "groupe1",
+                CodeClient = "code1",
+                DatePresentation = new DateTime(2017, 06, 01),
+                HeureDebut = new DateTime(2017, 06, 01, 21, 00, 00),
+                HeureFin = new DateTime(2017, 06, 01, 23, 00, 00),
+                Prix = 199.99
+            };
+
+            _repository.AddContrat(contrat);
+            _repository.UpdateContrat(updatedContrat);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Contrats.FirstOrDefault().ShouldBeEquivalentTo(updatedContrat);
             }
         }
     }
