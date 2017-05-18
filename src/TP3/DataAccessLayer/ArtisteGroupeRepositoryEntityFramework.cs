@@ -99,9 +99,10 @@ namespace TP3.DataAccessLayer
             _context.SaveChanges();
         }
 
-        public void UpdateGroupe(Groupe groupe)
+        public void UpdateGroupe(Groupe newGroupe)
         {
-            _context.Groupes.Update(groupe);
+            Groupe originalGroupe = GetGroupe(newGroupe.Nom);
+            _context.Entry(originalGroupe).CurrentValues.SetValues(newGroupe);
             _context.SaveChanges();
         }
 
@@ -127,6 +128,8 @@ namespace TP3.DataAccessLayer
             };
 
             _context.LienArtisteGroupe.Add(lien);
+
+            _context.SaveChanges();
         }
 
         public void QuitterGroupe(int idArtiste, string nomGroupe)
@@ -136,6 +139,8 @@ namespace TP3.DataAccessLayer
             );
 
             _context.LienArtisteGroupe.Remove(lien);
+
+            _context.SaveChanges();
         }
 
     }

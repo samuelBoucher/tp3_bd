@@ -67,7 +67,7 @@ namespace TP3.Tests
                 Prenom = "Prenom",
                 Nom = "Nom",
                 NoTelephone = 123456789,
-                Nas = 123456,
+                Nas = 45151234,
                 NomScène = "NomScene"
             };
 
@@ -75,7 +75,7 @@ namespace TP3.Tests
 
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.Artistes.Find(artiste.IdArtiste).ShouldBeEquivalentTo(artiste);
+                apiDbContext.Artistes.FirstOrDefault(x => x.IdArtiste == artiste.IdArtiste).ShouldBeEquivalentTo(artiste);
             }
         }
 
