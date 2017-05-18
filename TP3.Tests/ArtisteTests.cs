@@ -8,14 +8,14 @@ using Xunit.Sdk;
 
 namespace TP3.Tests
 {
-    public class ArtisteGroupeTestSetup
+    public class ArtisteTestSetup
     {
         public Artiste anyArtiste;
         public Groupe anyGroupe;
         public readonly HedgesContextFactory _contextFactory;
         public readonly ArtisteGroupeRepositoryEntityFramework _repository;
 
-        public ArtisteGroupeTestSetup()
+        public ArtisteTestSetup()
         {
             _contextFactory = new HedgesContextFactory();
             var dbContext = _contextFactory.Create();
@@ -54,10 +54,8 @@ namespace TP3.Tests
     }
 
 
-    public class ArtisteGroupeTests : ArtisteGroupeTestSetup
+    public class ArtisteTests : ArtisteTestSetup
     {
-//--------------------------- ARTISTE -----------------------------------------------------------------------------------------------------------
-
         [Fact]
         public void Add_ShouldAddArtisteToDatabase()
         {
