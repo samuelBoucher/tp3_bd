@@ -25,12 +25,12 @@ namespace TP3.DataAccessLayer
 
         public IEnumerable<Groupe> GetGroupesForArtiste(int id)
         {
-            IEnumerable<Groupe> groupes = new List<Groupe>(); 
+            List<Groupe> groupes = new List<Groupe>(); 
             ICollection<LienArtisteGroupe> liens = _context.LienArtisteGroupe.Where(x => x.IdArtiste == id).ToList();
 
             foreach (LienArtisteGroupe lien in liens)
             {
-                groupes.Append(GetGroupe(lien.NomGroupe));
+                groupes.Add(GetGroupe(lien.NomGroupe));
             }
 
             return groupes;
@@ -45,7 +45,10 @@ namespace TP3.DataAccessLayer
                 {
                     DeleteGroupe(groupe.Nom);
                 }
-                _context.LienArtisteGroupe.Remove(_context.LienArtisteGroupe.FirstOrDefault(x => x.IdArtiste == id));
+                else
+                {
+                    _context.LienArtisteGroupe.Remove(_context.LienArtisteGroupe.FirstOrDefault(x => x.IdArtiste == id));
+                }
             }
             _context.Artistes.Remove(artiste);
             _context.SaveChanges();
@@ -72,12 +75,12 @@ namespace TP3.DataAccessLayer
 
         public IEnumerable<Artiste> GetArtistesForGroupe(string nom)
         {
-            IEnumerable<Artiste> artistes = new List<Artiste>();
+            List<Artiste> artistes = new List<Artiste>();
             ICollection<LienArtisteGroupe> liens = _context.LienArtisteGroupe.Where(x => x.NomGroupe == nom).ToList();
 
             foreach (LienArtisteGroupe lien in liens)
             {
-                artistes.Append(_context.Artistes.FirstOrDefault(x => x.IdArtiste == lien.IdArtiste));
+                artistes.Add(_context.Artistes.FirstOrDefault(x => x.IdArtiste == lien.IdArtiste));
             }
 
             return artistes;
