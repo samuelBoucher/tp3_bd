@@ -106,5 +106,49 @@ namespace TP3.Tests
             }
         }
 
+        [Fact]
+        public void DeleteClient_ShouldDeleteClientContrats()
+        {
+            var client = new Client()
+            {
+                CodeClient = "Code",
+                Prenom = "Prenom",
+                Nom = "Nom",
+                NoTelephone = 123456789,
+                DepotNecessaire = false
+            };
+            var contrat = new Contrat()
+            {
+                NomGroupe = "groupe",
+                CodeClient = "code",
+                DatePresentation = new DateTime(2017, 06, 01),
+                HeureDebut = new DateTime(2017, 06, 01, 21, 00, 00),
+                HeureFin = new DateTime(2017, 06, 01, 23, 00, 00),
+                Prix = 199.99
+            };
+
+            var contrat2 = new Contrat()
+            {
+                NomGroupe = "groupe1",
+                CodeClient = "code1",
+                DatePresentation = new DateTime(2017, 06, 01),
+                HeureDebut = new DateTime(2017, 06, 01, 21, 00, 00),
+                HeureFin = new DateTime(2017, 06, 01, 23, 00, 00),
+                Prix = 199.99
+            };
+
+            _repository.AddClient(client);
+            _repository.AddContrat(contrat);
+            _repository.AddContrat(contrat2);
+
+            _repository.DeleteClient(client);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Contrats.Should().NotContain(contrat);
+                apiDbContext.Contrats.Should().NotContain(contrat2);
+            }
+        }
+
     }
 }

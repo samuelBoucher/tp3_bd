@@ -1,4 +1,5 @@
-﻿using TP3.Entities;
+﻿using System.Linq;
+using TP3.Entities;
 
 namespace TP3.DataAccessLayer
 {
@@ -30,6 +31,10 @@ namespace TP3.DataAccessLayer
 
         public void DeleteClient(Client client)
         {
+            foreach (var contrat in _context.Contrats.Where(x => x.CodeClient == client.CodeClient))
+            {
+                this.DeleteContrat(contrat);
+            }
             _context.Clients.Remove(client);
             _context.SaveChanges();
         }
