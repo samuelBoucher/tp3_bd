@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TP3.DataAccessLayer;
@@ -111,6 +113,24 @@ namespace TP3.Tests
         }
 
         [Fact]
+        public void Delete_ShouldRemoveLiensArtisteGroupeFromDatabase()
+        {
+            Groupe secondGroup = new Groupe
+            {
+                Nom = "Groupe2",
+                CachetVoulu = "COOL"
+            };
+
+            _repository.AddGroupe(secondGroup, anyArtiste.IdArtiste, "cool guy");
+            _repository.DeleteArtiste(anyArtiste.IdArtiste);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.LienArtisteGroupe.ToList().Count.Should().Be(0);
+            }
+        }
+
+        [Fact]
         public void Update_ShouldUpdateArtisteInDatabase()
         {
             var newArtiste = new Artiste()
@@ -129,6 +149,53 @@ namespace TP3.Tests
             {
                 apiDbContext.Artistes.Find(anyArtiste.IdArtiste).ShouldBeEquivalentTo(newArtiste);
             }
+        }
+
+        //-------------MODEL STATE---------------------------------------------------------------
+
+        private bool ValidateArtiste(Artiste artiste)
+        {
+            var validationResults = new List<ValidationResult>();
+            var validationContext = new ValidationContext(artiste, null, null);
+            return Validator.TryValidateObject(artiste, validationContext, validationResults, true);
+        }
+
+        [Fact]
+        public void ModelState_GoodItem_ReturnNoError()
+        {
+            var modelStateValidity = ValidateArtiste(anyArtiste);
+
+            modelStateValidity.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ModelState_ArtisteWithoutName_ReturnAnError()
+        {
+            anyArtiste.Nom = null;
+
+            var modelStateValidity = ValidateArtiste(anyArtiste);
+
+            modelStateValidity.Should().BeFalse();
+        }
+
+        [Fact]
+        public void ModelState_ArtisteWithoutFamilyName_ReturnAnError()
+        {
+            anyArtiste.Prenom = null;
+
+            var modelStateValidity = ValidateArtiste(anyArtiste);
+
+            modelStateValidity.Should().BeFalse();
+        }
+
+        [Fact]
+        public void ModelState_ArtisteWithoutSceneName_ReturnNoError()
+        {
+            anyArtiste.NomScène = null;
+
+            var modelStateValidity = ValidateArtiste(anyArtiste);
+
+            modelStateValidity.Should().BeTrue();
         }
     }
 }
