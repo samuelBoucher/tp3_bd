@@ -47,7 +47,7 @@ namespace TP3.DataAccessLayer
                 }
                 else
                 {
-                    _context.LienArtisteGroupe.Remove(_context.LienArtisteGroupe.FirstOrDefault(x => x.IdArtiste == id));
+                    QuitterGroupe(artiste.IdArtiste, groupe.Nom);
                 }
             }
             _context.Artistes.Remove(artiste);
@@ -92,8 +92,9 @@ namespace TP3.DataAccessLayer
             Groupe groupe = GetGroupe(nomGroupe);
             foreach (LienArtisteGroupe lien in _context.LienArtisteGroupe.Where(x => x.NomGroupe == nomGroupe))
             {
-                _context.LienArtisteGroupe.Remove(lien);
+                QuitterGroupe(lien.IdArtiste, lien.NomGroupe);
             }
+      
             _context.Groupes.Remove(groupe);
             _context.SaveChanges();
         }
@@ -106,16 +107,9 @@ namespace TP3.DataAccessLayer
 
         public void AddGroupe(Groupe groupe, int idArtiste, string role)
         {
-            Artiste artiste = GetArtiste(idArtiste); 
 
-            LienArtisteGroupe lien = new LienArtisteGroupe()
-            {
-                IdArtiste = idArtiste,
-                NomGroupe = groupe.Nom,
-                RoleArtiste = role
-            };
+            JoindreGroupe(idArtiste, groupe.Nom, role);
 
-            _context.LienArtisteGroupe.Add(lien);
             _context.Groupes.Add(groupe);
             
             _context.SaveChanges();
@@ -137,11 +131,9 @@ namespace TP3.DataAccessLayer
 
         public void QuitterGroupe(int idArtiste, string nomGroupe)
         {
-            LienArtisteGroupe lien = new LienArtisteGroupe()
-            {
-                IdArtiste = idArtiste,
-                NomGroupe = nomGroupe
-            };
+            LienArtisteGroupe lien = _context.LienArtisteGroupe.FirstOrDefault(
+                x => x.IdArtiste == idArtiste && x.NomGroupe == nomGroupe
+            );
 
             _context.LienArtisteGroupe.Remove(lien);
         }
