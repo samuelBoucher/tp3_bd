@@ -113,7 +113,6 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
-                NoContrat = 1,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -135,7 +134,7 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
-                NoContrat = 2,
+                NoContrat = 1,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -169,7 +168,6 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
-                NoContrat = 2,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -180,7 +178,6 @@ namespace TP3.Tests
 
             var contrat2 = new Contrat()
             {
-                NoContrat = 3,
                 NomGroupe = "groupe1",
                 CodeClient = "code1",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -196,6 +193,84 @@ namespace TP3.Tests
             using (var apiDbContext = _contextFactory.Create())
             {
                 apiDbContext.Contrats.Should().NotContain(contrat2);
+            }
+        }
+
+        [Fact]
+        public void AddFacture_ShouldAddFactureToDatabase()
+        {
+            var facture = new Facture()
+            {
+                NoContrat = 1,
+                DateFacture = new DateTime(2017, 06, 01),
+                DatePaiement = new DateTime(2017, 06, 15),
+                Prix = 199.99
+            };
+
+            _repository.AddFacture(facture);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Factures.FirstOrDefault().ShouldBeEquivalentTo(facture);
+            }
+        }
+
+        [Fact]
+        public void UpdateFacture_ShouldUpdateFactureToDatabase()
+        {
+            var facture = new Facture()
+            {
+                NoFacture = 1,
+                NoContrat = 1,
+                DateFacture = new DateTime(2017, 06, 01),
+                DatePaiement = new DateTime(2017, 06, 15),
+                Prix = 199.99
+            };
+
+            var updatedFacture = new Facture()
+            {
+                NoFacture = facture.NoFacture,
+                NoContrat = 1,
+                DateFacture = new DateTime(2017, 06, 01),
+                DatePaiement = new DateTime(2017, 06, 15),
+                Prix = 199.99
+            };
+
+            _repository.AddFacture(facture);
+            _repository.UpdateFacture(updatedFacture);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Factures.FirstOrDefault().ShouldBeEquivalentTo(updatedFacture);
+            }
+        }
+
+        [Fact]
+        public void DeleteFacture_ShouldDeleteFacture()
+        {
+            var facture = new Facture()
+            {
+                NoContrat = 1,
+                DateFacture = new DateTime(2017, 06, 01),
+                DatePaiement = new DateTime(2017, 06, 15),
+                Prix = 199.99
+            };
+
+            var facture2 = new Facture()
+            {
+                NoContrat = 1,
+                DateFacture = new DateTime(2017, 06, 01),
+                DatePaiement = new DateTime(2017, 06, 15),
+                Prix = 199.99
+            };
+            _repository.AddFacture(facture);
+            _repository.AddFacture(facture2);
+
+            _repository.DeleteFacture(facture2);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Factures.Should().NotContain(facture2);
             }
         }
     }
