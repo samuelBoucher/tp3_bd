@@ -20,7 +20,8 @@ namespace TP3.Entities
         public string Nom { get; set; }
 
         [Required]
-        public int NoTelephone { get; set; }
+        [Range(1000000000, 9999999999)]
+        public long NoTelephone { get; set; }
 
         [Required]
         public bool DepotNecessaire { get; set; }

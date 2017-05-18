@@ -7,12 +7,12 @@ using Xunit;
 
 namespace TP3.Tests
 {
-    public class ClientTest
+    public class ClientRepositoryTest
     {
         private readonly HedgesContextFactory _contextFactory;
         private readonly ClientEntityFramework _repository;
 
-        public ClientTest()
+        public ClientRepositoryTest()
         {
             _contextFactory = new HedgesContextFactory();
 
