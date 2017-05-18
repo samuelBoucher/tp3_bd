@@ -109,9 +109,41 @@ namespace TP3.Tests
             }
         }
 
+        [Fact]
+        public void DeleteContrat_ShouldDeleteFactureOfContrat()
+        {
+            var contrat = new Contrat()
+            {
+                NomGroupe = "groupe",
+                CodeClient = "code",
+                DatePresentation = new DateTime(2017, 06, 01),
+                HeureDebut = new DateTime(2017, 06, 01, 21, 00, 00),
+                HeureFin = new DateTime(2017, 06, 01, 23, 00, 00),
+                Prix = 199.99
+            };
+            var facture = new Facture()
+            {
+                NoContrat = 1,
+                DateFacture = new DateTime(2017, 06, 01),
+                DatePaiement = new DateTime(2017, 06, 15),
+                Prix = 199.99
+            };
+
+            _repository.AddContrat(contrat);
+            _repository.AddFacture(facture);
+
+            _repository.DeleteContrat(contrat);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Factures.Should().NotContain(facture);
+            }
+        }
+
         private static void ClearAllTables(HedgesProductionsContext dbContext)
         {
             dbContext.Contrats.RemoveRange(dbContext.Contrats);
+            dbContext.Factures.RemoveRange(dbContext.Factures);
             dbContext.SaveChanges();
         }
     }
