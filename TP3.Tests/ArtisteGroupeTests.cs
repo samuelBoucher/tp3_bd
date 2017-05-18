@@ -111,5 +111,26 @@ namespace TP3.Tests
                 apiDbContext.Groupes.ToList().Count.Should().Be(0);
             }
         }
+
+        [Fact]
+        public void Update_ShouldUpdateArtisteInDatabase()
+        {
+            var newArtiste = new Artiste()
+            {
+                IdArtiste = anyArtiste.IdArtiste,
+                Prenom = "NouveauPrenom",
+                Nom = "NouveauNom",
+                NoTelephone = 987654321,
+                Nas = 652451,
+                NomScène = "NouveauNomScene"
+            };
+
+            _repository.UpdateArtiste(newArtiste);
+
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                apiDbContext.Artistes.Find(anyArtiste.IdArtiste).ShouldBeEquivalentTo(newArtiste);
+            }
+        }
     }
 }

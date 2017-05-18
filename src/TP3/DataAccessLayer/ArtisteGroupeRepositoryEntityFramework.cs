@@ -56,7 +56,8 @@ namespace TP3.DataAccessLayer
 
         public void UpdateArtiste(Artiste newArtiste)
         {
-            _context.Artistes.Update(newArtiste);
+            Artiste originalArtiste = GetArtiste(newArtiste.IdArtiste);
+            _context.Entry(originalArtiste).CurrentValues.SetValues(newArtiste);
             _context.SaveChanges();
         }
 
