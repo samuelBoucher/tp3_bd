@@ -120,5 +120,31 @@ namespace TP3.DataAccessLayer
             
             _context.SaveChanges();
         }
+
+        //--------------------------LIENS ARTISTE GROUPE----------------------------------------------------------
+
+        public void JoindreGroupe(int idArtiste, string nomGroupe, string role)
+        {
+            LienArtisteGroupe lien = new LienArtisteGroupe()
+            {
+                IdArtiste = idArtiste,
+                NomGroupe = nomGroupe,
+                RoleArtiste = role
+            };
+
+            _context.LienArtisteGroupe.Add(lien);
+        }
+
+        public void QuitterGroupe(int idArtiste, string nomGroupe)
+        {
+            LienArtisteGroupe lien = new LienArtisteGroupe()
+            {
+                IdArtiste = idArtiste,
+                NomGroupe = nomGroupe
+            };
+
+            _context.LienArtisteGroupe.Remove(lien);
+        }
+
     }
 }
