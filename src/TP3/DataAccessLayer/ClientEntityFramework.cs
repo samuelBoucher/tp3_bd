@@ -65,13 +65,13 @@ namespace TP3.DataAccessLayer
 
         public void UpdateFacture(Facture updatedFacture)
         {
-            //var originalClient = _context.Clients.Find(updatedClient.CodeClient);
+            var originalClient = _context.Factures.Find(updatedFacture.NoFacture);
 
-            //if (originalClient != null)
-            //{
-            //    _context.Entry(originalClient).CurrentValues.SetValues(updatedClient);
-            //    _context.SaveChanges();
-            //}
+            if (originalClient != null)
+            {
+                _context.Entry(originalClient).CurrentValues.SetValues(updatedFacture);
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteFacture(Facture facture)
