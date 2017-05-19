@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using FluentAssertions;
@@ -133,6 +134,30 @@ namespace TP3.Tests
 
             
                 apiDbContext.LienArtisteGroupe.Should().NotContain(lien);
+
+            }
+        }
+
+        [Fact]
+        public void Delete_ShouldRemoveContratFromDatabase()
+        {
+            using (var apiDbContext = _contextFactory.Create())
+            {
+                Contrat contrat = new Contrat
+                {
+                    CodeClient = "wow",
+                    DatePresentation = DateTime.MaxValue,
+                    HeureDebut = DateTime.MaxValue,
+                    HeureFin = DateTime.MaxValue,
+                    NoContrat = 1234,
+                    NomGroupe = anyGroupe.Nom,
+                    Prix = 293
+                };
+
+                _repository.DeleteGroupe(anyGroupe.Nom);
+
+
+                apiDbContext.Contrats.ToList().Count().Should().Be(0);
 
             }
         }

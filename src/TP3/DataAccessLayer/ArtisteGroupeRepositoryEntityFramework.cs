@@ -94,7 +94,12 @@ namespace TP3.DataAccessLayer
             {
                 QuitterGroupe(lien.IdArtiste, lien.NomGroupe);
             }
-      
+
+            foreach (Contrat contrat in _context.Contrats.Where(x => x.NomGroupe == nomGroupe))
+            {
+                _context.Contrats.Remove(contrat);
+            }
+
             _context.SaveChanges();
         }
 
