@@ -95,7 +95,6 @@ namespace TP3.DataAccessLayer
                 QuitterGroupe(lien.IdArtiste, lien.NomGroupe);
             }
       
-            _context.Groupes.Remove(groupe);
             _context.SaveChanges();
         }
 
