@@ -154,6 +154,8 @@ namespace TP3.Tests
                     Prix = 293
                 };
 
+                apiDbContext.Contrats.Add(contrat);
+
                 _repository.DeleteGroupe(anyGroupe.Nom);
 
 
