@@ -95,7 +95,7 @@ namespace TP3.Tests
 
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.LienArtisteGroupe.Find(anyArtiste.IdArtiste, groupe.Nom ).ShouldBeEquivalentTo(expectedLink);
+                apiDbContext.LienArtisteGroupe.FirstOrDefault(x => x.IdArtiste == anyArtiste.IdArtiste && x.NomGroupe == groupe.Nom).ShouldBeEquivalentTo(expectedLink);
             }
         }
 
@@ -116,18 +116,24 @@ namespace TP3.Tests
 
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.Groupes.ToList().Count.Should().Be(0);
+                apiDbContext.Groupes.Should().NotContain(anyGroupe);
             }
         }
 
         [Fact]
         public void Delete_ShouldRemoveLiensArtisteGroupeFromDatabase()
         {
-            _repository.DeleteGroupe(anyGroupe.Nom);
-
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.LienArtisteGroupe.ToList().Count.Should().Be(0);
+                LienArtisteGroupe lien = apiDbContext.LienArtisteGroupe
+                    .FirstOrDefault(x => x.NomGroupe == anyGroupe.Nom
+                                    && x.IdArtiste == anyArtiste.IdArtiste);
+
+                _repository.DeleteGroupe(anyGroupe.Nom);
+
+            
+                apiDbContext.LienArtisteGroupe.Should().NotContain(lien);
+
             }
         }
 
@@ -144,7 +150,7 @@ namespace TP3.Tests
 
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.Groupes.Find(anyGroupe.Nom).ShouldBeEquivalentTo(newgroupe);
+                apiDbContext.Groupes.FirstOrDefault(x => x.Nom == anyGroupe.Nom).ShouldBeEquivalentTo(newgroupe);
             }
         }
 

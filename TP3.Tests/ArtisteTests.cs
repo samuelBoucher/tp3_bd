@@ -147,7 +147,7 @@ namespace TP3.Tests
 
             using (var apiDbContext = _contextFactory.Create())
             {
-                apiDbContext.Artistes.Find(anyArtiste.IdArtiste).ShouldBeEquivalentTo(newArtiste);
+                apiDbContext.Artistes.FirstOrDefault(x => x.IdArtiste == anyArtiste.IdArtiste).ShouldBeEquivalentTo(newArtiste);
             }
         }
 

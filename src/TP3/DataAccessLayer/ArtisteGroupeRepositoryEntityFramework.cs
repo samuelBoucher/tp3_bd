@@ -138,7 +138,16 @@ namespace TP3.DataAccessLayer
                 x => x.IdArtiste == idArtiste && x.NomGroupe == nomGroupe
             );
 
-            _context.LienArtisteGroupe.Remove(lien);
+            if (GetArtistesForGroupe(nomGroupe).Count() == 1)
+            {
+                _context.LienArtisteGroupe.Remove(lien);
+                Groupe groupe = GetGroupe(nomGroupe);
+                _context.Groupes.Remove(groupe);
+            }
+            else
+            {
+                _context.LienArtisteGroupe.Remove(lien);
+            }
 
             _context.SaveChanges();
         }
