@@ -58,10 +58,11 @@ namespace TP3.DataAccessLayer
 
         public void DeleteContrat(Contrat contrat)
         {
-            foreach (var facture in _context.Factures.Where(x => x.NoContrat == contrat.NoContrat))
+            foreach(var facture in _context.Factures.Where(x => x.NoContrat == contrat.NoContrat))
             {
                 this.DeleteFacture(facture);
             }
+
             _context.Contrats.Remove(contrat);
             _context.SaveChanges();
         }

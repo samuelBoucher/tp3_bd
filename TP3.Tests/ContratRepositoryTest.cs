@@ -26,6 +26,7 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
+                NoContrat = 1,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -47,7 +48,7 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
-                NoContrat = 1,
+                NoContrat = 2,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -81,6 +82,7 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
+                NoContrat = 3,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -91,6 +93,7 @@ namespace TP3.Tests
 
             var contrat2 = new Contrat()
             {
+                NoContrat = 4,
                 NomGroupe = "groupe1",
                 CodeClient = "code1",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -114,6 +117,7 @@ namespace TP3.Tests
         {
             var contrat = new Contrat()
             {
+                NoContrat = 5,
                 NomGroupe = "groupe",
                 CodeClient = "code",
                 DatePresentation = new DateTime(2017, 06, 01),
@@ -123,7 +127,7 @@ namespace TP3.Tests
             };
             var facture = new Facture()
             {
-                NoContrat = 1,
+                NoContrat = 5,
                 DateFacture = new DateTime(2017, 06, 01),
                 DatePaiement = new DateTime(2017, 06, 15),
                 Prix = 199.99
